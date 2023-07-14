@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<InventoryResponse>
+  <Item>
+    <ItemID>22699</ItemID>
+    <CaseQty>34</CaseQty>
+    <BottleQty>834</BottleQty>
+  </Item>
+  <Item>
+    <ItemID>45179</ItemID>
+    <CaseQty>30</CaseQty>
+    <BottleQty>364</BottleQty>
+  </Item>
+  <Item>
+    <ItemID>32102</ItemID>
+    <CaseQty>19</CaseQty>
+    <BottleQty>234</BottleQty>
+  </Item>
+  <Item>
+    <ItemID>11460</ItemID>
+    <CaseQty>50</CaseQty>
+    <BottleQty>600</BottleQty>
+  </Item>
+</InventoryResponse>
