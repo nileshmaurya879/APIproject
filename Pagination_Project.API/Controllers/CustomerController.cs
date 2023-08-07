@@ -20,7 +20,7 @@ namespace Pagination_Project.API.Controllers
     public class CustomerController : BaseController
     {
         private ICustomerDataAccess _icustomerDataAccess;
-        public CustomerController(ICustomerDataAccess customerDataAccess)
+        public CustomerController(ICustomerDataAccess customerDataAccess) : base(customerDataAccess)
         {
             _icustomerDataAccess = customerDataAccess;
         }

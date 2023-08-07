@@ -1,13 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using Pagination_Project.API.Domain.Entities;
 using Pagination_Project.API.Domain.Interface;
-using Pagination_Project.API.Infrastructure.AutoMapper;
 using Pagination_Project.API.Infrastructure.Model;
+using Pagination_Project.API.Infrastructure.AutoMapper;
 using Pagination_Project.API.Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pagination_Project.API.Tests.Setup
 {
@@ -18,6 +16,9 @@ namespace Pagination_Project.API.Tests.Setup
         public readonly ICustomerDataAccess _CustomerDataAccess;
         public readonly IMapper _mapper;
         public readonly APIDBContext _aPIDBContext;
+
+        public readonly AddressDto _address;
+
         public DatabaseFixture() {
             _apiContextInitTest = new APIContextInitTest();
             var mapperConfig = new MapperConfiguration(mc =>
@@ -29,8 +30,16 @@ namespace Pagination_Project.API.Tests.Setup
 
             int id = 41;
             var test = _CustomerDataAccess.GetCustomer(id);
+
+            _address = GetAddress("Unit 45");
         }
 
+        public AddressDto GetAddress(string line1)
+        {
+            var addressDB = _CustomerDataAccess.GetAddresses();
+            var address = addressDB.Where(x => x.Line1 == line1).FirstOrDefault(); 
+            return address;
+        }
         public void Dispose()
         {
            // throw new NotImplementedException();

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pagination_Project.API.Infrastructure.Model;
 
 namespace Pagination_Project.API.Infrastructure.Model
 {
@@ -17,6 +16,7 @@ namespace Pagination_Project.API.Infrastructure.Model
         public virtual DbSet<TblLineNumberFormatSectionType> TblLineNumberFormatSectionTypes { get; set; }
         public virtual DbSet<TestSecurityRole> TestSecurityRoles { get; set; }
         public virtual DbSet<TestSecurityRolePermission> TestSecurityRolePermissions { get; set; }
+        public virtual DbSet<TestAddress> TestAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,12 @@ namespace Pagination_Project.API.Infrastructure.Model
             {
                 entity.HasKey(e => e.LineNumberFormatSectionTypeId);
                 entity.ToTable("TblLineNumberFormatSectionType");
+            });
+
+            modelBuilder.Entity<TestAddress>(entity =>
+            {
+                entity.HasKey(e => e.AddressID);
+                entity.ToTable("TestAddress");
             });
 
             modelBuilder.Entity<TestSecurityRole>().ToTable("testSecurityRole");

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.Services.Identity;
 using Pagination_Project.API.Domain.Entities;
 using Pagination_Project.API.Domain.Enum;
+using Pagination_Project.API.Domain.Interface;
 using Pagination_Project.API.Domain.Validation;
 using System;
 
@@ -10,12 +11,15 @@ namespace Pagination_Project.API.Controllers
     public class BaseController : ControllerBase
     {
 
-        public BaseController() { }
+        public ICustomerDataAccess _customerDataAccess;
+        public BaseController(ICustomerDataAccess customerDataAccess) {
+            _customerDataAccess = customerDataAccess;
+        }
 
         protected bool IsValidData(object data, Operations op, EntityType type, Guid? instanceId, out ValidationReturn validation)
         {
             var isValid = false;
-            var validator = new InputValidations();
+            var validator = new InputValidations(_customerDataAccess);
 
             if (validator.IsValid(data, op, type, instanceId))
                 isValid = true;

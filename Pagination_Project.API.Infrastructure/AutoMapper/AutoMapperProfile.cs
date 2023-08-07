@@ -18,8 +18,20 @@ namespace Pagination_Project.API.Infrastructure.AutoMapper
      
         public AutoMapperProfile()
         {
-            CreateMap<Customer, CustomerDto>().ReverseMap(); 
-              
+            #region Address
+
+            CreateMap<TestAddress, AddressDto>().ReverseMap();
+
+            CreateMap<AddressCreationDto, TestAddress>().ReverseMap();
+
+            CreateMap<AddressCreationDto, AddressDto>().ReverseMap();
+
+            #endregion
+
+            #region Customer
+
+            CreateMap<Customer, CustomerDto>().ReverseMap();
+
             CreateMap<Customer, CustomerForUpdateDto>().ReverseMap();
 
             CreateMap<CustomerForCreationDto, Customer>().ReverseMap();
@@ -28,6 +40,7 @@ namespace Pagination_Project.API.Infrastructure.AutoMapper
             CreateMap<CustomerDto, Customer>().ReverseMap();
             CreateMap<spCustomer, CustomerDto>();
 
+            #endregion
 
             #region Line Number Format
 
@@ -64,6 +77,7 @@ namespace Pagination_Project.API.Infrastructure.AutoMapper
             CreateMap<TblLineNumberFormatSectionType,LineNumberFormatSectionTypeDto>().ReverseMap();
 
             #endregion
+
             #region SecurityRole
 
             CreateMap<TestSecurityRole, UserSecurityRoleDto>().ReverseMap();

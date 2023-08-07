@@ -3,10 +3,6 @@ using Pagination_Project.API.Domain.Model;
 using Pagination_Project.API.Domain.Validation;
 using Pagination_Project.API.Tests.Setup;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pagination_Project.API.Tests.Tests
@@ -32,12 +28,12 @@ namespace Pagination_Project.API.Tests.Tests
 
             
             
-            var validator = new InputValidations();
+            var validator = new InputValidations(_databaseFixture._CustomerDataAccess);
             var isvalid = validator.IsValidPayload(pageFilter);
 
             Assert.False(isvalid, "Validation result -");
             Assert.NotNull(validator.Invalid);
-            Assert.Contains("Values should be Greater than 0", validator.Invalid.Value);
+            Assert.Contains("Values should be Greater than 0", validator.Invalid.Message);
         }
 
         [Fact(DisplayName ="Add Customer - write Data")]

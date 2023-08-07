@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.VisualStudio.Services.Common;
-using Microsoft.VisualStudio.Services.WebApi.Exceptions;
 using Pagination_Project.API.Domain.Entities;
 using Pagination_Project.API.Domain.Helper;
 using Pagination_Project.API.Domain.Interface;
@@ -13,10 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Security.Permissions;
-using System.Threading.Tasks;
+
 
 namespace Pagination_Project.API.Infrastructure.Repository
 {
@@ -30,6 +25,57 @@ namespace Pagination_Project.API.Infrastructure.Repository
             _APIDBContext= aPIDBContext;
             _mapper = mapper;
         }
+
+        #region Address
+
+        public IEnumerable<AddressDto> GetAddresses()
+        {
+            var addresDB = _APIDBContext.TestAddresses.Where(x => x.Active).ToList();
+
+            return _mapper.Map<IEnumerable<AddressDto>>(addresDB);
+        }
+
+        public bool IsAddressExists(IEnumerable<Guid> addressIds)
+        {
+            var test = string.Empty;
+            if (addressIds != null)
+            {
+                test = _APIDBContext.TestAddresses.AsNoTracking().Where(x => addressIds.Contains(x.AddressID)).Select(x => x.AddressID).ToString();
+            }
+            return (test != null ? true : false);
+        }
+        public IEnumerable<AddressDto> AddAddresses(IEnumerable<AddressCreationDto> address)
+        {
+            if(address == null)
+                throw new ArgumentNullException(nameof(address));
+            try
+            {
+                var createdBy = Guid.NewGuid();
+                var createdDate = DateTime.UtcNow;
+                var addressDB = _mapper.Map<IEnumerable<TestAddress>>(address);
+
+                addressDB.ToList().ForEach(x =>
+                {
+                    x.AddressID = Guid.NewGuid();
+                    x.CreatedBy = createdBy;
+                    x.CreatedDate= createdDate;
+                    x.EditedDate= createdDate;
+                    x.EditedBy = createdBy;
+                    x.Active = true;
+                });
+                _APIDBContext.TestAddresses.AddRange(addressDB);
+                _APIDBContext.SaveChanges();
+
+                return _mapper.Map<IEnumerable<AddressDto>>(address);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        #endregion
 
         #region Customer
 
@@ -277,7 +323,7 @@ namespace Pagination_Project.API.Infrastructure.Repository
                 if (lineNumberFormatCreation != null && lineNumberFormatCreation.Any())
                     InsertLineNumberFormatSection(lineNumberFormatCreation.Where(x => x.Sections != null && x.Sections.Any()).SelectMany(x => x.Sections));
 
-                //_APIDBContext.SaveChanges();
+                _APIDBContext.SaveChanges();
 
                 return _mapper.Map<IEnumerable<LineNumberFormatDto>>(lineNumberFormateDB);
             }

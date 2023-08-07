@@ -6,10 +6,10 @@ namespace Pagination_Project.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserSecurityRoleController : ControllerBase
+    public class UserSecurityRoleController : BaseController
     {
         private readonly ICustomerDataAccess _customerDataAccess;
-        public UserSecurityRoleController(ICustomerDataAccess customerDataAccess)
+        public UserSecurityRoleController(ICustomerDataAccess customerDataAccess) : base(customerDataAccess)
         {
             _customerDataAccess = customerDataAccess;
         }

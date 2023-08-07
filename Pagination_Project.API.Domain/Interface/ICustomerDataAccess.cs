@@ -8,6 +8,18 @@ namespace Pagination_Project.API.Domain.Interface
 {
     public interface ICustomerDataAccess
     {
+        #region Address
+
+        IEnumerable<AddressDto> GetAddresses();
+
+        IEnumerable<AddressDto> AddAddresses(IEnumerable<AddressCreationDto> address);
+
+        bool IsAddressExists(IEnumerable<Guid> addressIds);
+
+        #endregion
+
+        #region Customer
+
         public IEnumerable<CustomerDto> GetCustomerUsingSp();
         IEnumerable<CustomerDto> GetCustomerUsingSpById(int Id, string name);
         IEnumerable<CustomerDto> GetCustomers(PageFilter pageFilter);
@@ -18,6 +30,8 @@ namespace Pagination_Project.API.Domain.Interface
         bool DeleteCustomer(int customerID);
         bool UpdateCustomerData(CustomerForUpdateDto customer);
         IEnumerable<CustomerDto> UpdateCustomerDataSingle(IEnumerable<CustomerForUpdateDto> customer);
+
+        #endregion
 
         #region LineNumberFormate
         IEnumerable<LineNumberFormatDto> GetLineNumberFormats(Guid? instanceId = null);

@@ -14,7 +14,7 @@ namespace Pagination_Project.API.Controllers
     public class LineNumberFormateController : BaseController
     {
         private ICustomerDataAccess _icustomerDataAccess;
-        public LineNumberFormateController(ICustomerDataAccess customerDataAccess)
+        public LineNumberFormateController(ICustomerDataAccess customerDataAccess) : base(customerDataAccess)
         {
             _icustomerDataAccess = customerDataAccess;
         }
